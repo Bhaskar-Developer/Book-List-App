@@ -25,11 +25,33 @@ class UI {
       <td>${book.title}</td>
       <td>${book.author}</td>
       <td>${book.isbn}</td>
-      <td><a href='#' class="delete">X</a><td>` //this delete class will be lated used to delete the book from table
+      <td><a href='#' class="delete">X</a></td>` //this delete class will be lated used to delete the book from table
       
     //append this row as a child to the table list
     list.appendChild(row)  
   }
+
+  //show Custom Alert on UI based on the conditions
+  showCustomAlert(message, className) {
+    //Create a div that will have this alert message
+    const AlertDiv = document.createElement('div')
+    //give the div the classes of alert and ${className} 
+    //className can be success or error based on the condition
+    AlertDiv.className = `alert ${className}`
+    //We append the message as the text node for this alert div
+    AlertDiv.appendChild(document.createTextNode(message))
+    //select the main container and form 
+    const divContainer = document.querySelector('.container')
+    const form = document.querySelector('#book-form')
+    //show this alert after the main div container and before the form
+    divContainer.insertBefore(AlertDiv,form)
+
+    //make this alert disappear after 3 seconds
+    setTimeout(() => {
+      document.querySelector('.alert').remove()
+    },3000)
+  }
+
   //clear Form Fields
   clearFormFields() {
     document.getElementById('title').value = ''
@@ -48,14 +70,15 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
   //Create a Book object, which will have these values
   const book = new Book(title, author, isbn)
+  //instantiate ui object
+  const ui = new UI();
  
   //make sure that none of the values are empty
   if(title === '' || author === '' || isbn === '') {
     //Show Custom Alert On UI
+    ui.showCustomAlert('All fields are mandatory!','error')
   } else {
     //Insert the Book details into the table and clear the form fields
-    //instantiate ui object
-    const ui = new UI();
 
     //Add the book to table on UI
     ui.addBookToList(book)
