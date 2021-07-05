@@ -13,7 +13,6 @@ class Book {
 class UI {
   //Add book to the Table list UI
   addBookToList(book) {
-    console.log(book)
     //select the table list
     const list = document.getElementById('book-list')
 
@@ -31,7 +30,17 @@ class UI {
     list.appendChild(row)  
   }
 
-  //show Custom Alert on UI based on the conditions
+  //Delete book from the List UI
+  deleteBookFromList(e) {
+    //check if a is the target element that is selected
+    //a tag has the class of delete
+    if(e.target.className === 'delete'){
+      //We use event bubbling to delete the book from the table list
+      e.target.parentElement.parentElement.remove()
+    }
+  }
+
+  //show Custom Alert on UI based on the conditions i.e. book added, book deleted, invalid form entries
   showCustomAlert(message, className) {
     //Create a div that will have this alert message
     const AlertDiv = document.createElement('div')
@@ -84,6 +93,19 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     ui.addBookToList(book)
     //clear all Form fields
     ui.clearFormFields()
+    //Show custom alert saying that book is added to list
+    //The class of success will give the alert a green back ground
+    ui.showCustomAlert('Book added to list','success')
   }
   e.preventDefault();  
+})
+
+//Event listener for deleting book
+document.querySelector('#book-list').addEventListener('click', (e) => {
+  //e.target.parentElement.parentElement.remove()
+  const ui = new UI()
+  //function that deletes the book from the UI
+  ui.deleteBookFromList(e)
+  //show custom alert saying that the book was deleted from the UI
+  ui.showCustomAlert('Book removed from list','success')
 })
