@@ -27,9 +27,7 @@ class UI {
       <td><a href='#' class="delete">X</a></td>` //this delete class will be lated used to delete the book from table
       
     //append this row as a child to the table list
-    list.appendChild(row)
-    //add the book to local storage as well
-    localStore.pushNewBookToStorage(book)  
+    list.appendChild(row)  
   }
 
   //Delete book from the List UI
@@ -151,6 +149,8 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
     //Add the book to table on UI
     ui.addBookToList(book)
+    //add the book to local storage as well
+    localStore.pushNewBookToStorage(book)
     //clear all Form fields
     ui.clearFormFields()
     //Show custom alert saying that book is added to list
